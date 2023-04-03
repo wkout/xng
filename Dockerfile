@@ -5,7 +5,7 @@ GID=991 UID=991 \
 ISSUE_URL=https://github.com/yeavv/xng/issues \
 GIT_URL=https://github.com/yeavv/xng \
 GIT_BRANCH=main \
-UPSTREAM_COMMIT=464e69665cef7fb0b4bbd1c08578fcdd0ecfd48c
+UPSTREAM_COMMIT=3ab85db5ddd12e1d17dab7d72ea8a7cb7ca961b5
 WORKDIR /usr/local/searxng
 
 # install build deps and git clone searxng as well as setting the version
