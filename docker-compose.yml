@@ -7,30 +7,21 @@ version: '3.7'
     #ports:
       #- 8080:8080
 services:
-  #redis:
-    #image: redis:alpine
-    #restart: always
-    #command: redis-server --save "" --appendonly "no"
-    #cap_drop:
-      #- ALL
-    #cap_add:
-      #- SETGID
-      #- SETUID
-      #- DAC_OVERRIDE
+  redis:
+    image: redis:alpine
+    restart: always
+    command: redis-server --save "" --appendonly "no"
+    cap_drop:
+      - ALL
 
   xng:
-    #image: paulgoio/searxng:{ENV}
     image: yeavv/xng:production
     restart: always
     cap_drop:
       - ALL
-    cap_add:
-      - SETGID
-      - SETUID
-      - DAC_OVERRIDE
     environment:
       - LIMITER=true
-      #- REDIS_URL=redis://redis:6379/0
+      - REDIS_URL=redis://redis:6379/0
       - IMAGE_PROXY=true
       #- PROXY={URL1}
       - UWSGI_WORKERS=8
