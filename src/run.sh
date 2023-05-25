@@ -18,16 +18,10 @@ if [ ! -z "${IMAGE_PROXY}" ]; then
     searx/settings.yml;
 fi
 
-# set UWSGI_WORKERS from env
-if [ ! -z "${UWSGI_WORKERS}" ]; then
-sed -i -e "s|workers = .*|workers = ${UWSGI_WORKERS}|g" \
-/etc/uwsgi/uwsgi.ini
-fi
-
-# set UWSGI_THREADS from env
-if [ ! -z "${UWSGI_THREADS}" ]; then
-sed -i -e "s|threads = .*|threads = ${UWSGI_THREADS}|g" \
-/etc/uwsgi/uwsgi.ini
+# set redis if REDIS_URL contains URL
+if [ ! -z "${REDIS_URL}" ]; then
+    sed -i -e "s+url: unix:///usr/local/searxng-redis/run/redis.sock?db=0+url: ${REDIS_URL}+g" \
+    searx/settings.yml;
 fi
 
 # enable limiter if LIMITER exists
@@ -55,10 +49,10 @@ if [ ! -z "${PRIVACYPOLICY}" ]; then
 fi
 
 # set donation url
-# if [ ! -z "${DONATION_URL}" ]; then
-    # sed -i -e "s+donation_url: false+donation_url: ${DONATION_URL}+g" \
-    # searx/settings.yml;
-# fi
+if [ ! -z "${DONATION_URL}" ]; then
+    sed -i -e "s+donation_url: false+donation_url: ${DONATION_URL}+g" \
+    searx/settings.yml;
+fi
 
 # set contact url
 if [ ! -z "${CONTACT}" ]; then
