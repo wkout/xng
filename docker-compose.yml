@@ -46,8 +46,6 @@ services:
       - UWSGI_WORKERS=8
       - UWSGI_THREADS=4
       - BASE_URL=https://{DOMAIN}/
-      - NAME=PaulGO
-      - CONTACT=https://about.paulgo.io/#about
     labels:
       - traefik.enable=true
       - traefik.http.routers.{REPO}.rule=Host(`{DOMAIN}`)&&Method(`GET`,`POST`,`HEAD`)
