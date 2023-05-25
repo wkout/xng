@@ -11,8 +11,6 @@ services:
     image: redis:alpine
     restart: always
     command: redis-server --save "" --appendonly "no"
-    tmpfs:
-      - /var/lib/redis
     cap_drop:
       - ALL
     cap_add:
@@ -24,14 +22,6 @@ services:
     #image: paulgoio/searxng:{ENV}
     image: yeavv/xng:production
     restart: always
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1m"
-        max-file: "1"
-    networks:
-      - default
-      - proxy
     cap_drop:
       - ALL
     cap_add:
