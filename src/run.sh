@@ -18,9 +18,34 @@ if [ ! -z "${IMAGE_PROXY}" ]; then
     searx/settings.yml;
 fi
 
+# proxy config based on PROXY env var
+if [ ! -z "${PROXY}" ]; then
+    sed -i -e "s/  #  proxies:/  proxies:/g" \
+    -e "s+  #    all://:+    all://:+g" \
+    searx/settings.yml;
+    proxies=($(echo ${PROXY} | tr ',' ' '))
+    for i in "${proxies[@]}"
+    do
+        sed -i -e "s+    all://:+    all://:\n      - ${i}+g" \
+        searx/settings.yml;
+    done
+fi
+
+# set UWSGI_WORKERS from env
+if [ ! -z "${UWSGI_WORKERS}" ]; then
+sed -i -e "s|workers = .*|workers = ${UWSGI_WORKERS}|g" \
+/etc/uwsgi/uwsgi.ini
+fi
+
+# set UWSGI_THREADS from env
+if [ ! -z "${UWSGI_THREADS}" ]; then
+sed -i -e "s|threads = .*|threads = ${UWSGI_THREADS}|g" \
+/etc/uwsgi/uwsgi.ini
+fi
+
 # set redis if REDIS_URL contains URL
 if [ ! -z "${REDIS_URL}" ]; then
-    sed -i -e "s+url: unix:///usr/local/searxng-redis/run/redis.sock?db=0+url: ${REDIS_URL}+g" \
+    sed -i -e "s+  url: false+  url: ${REDIS_URL}+g" \
     searx/settings.yml;
 fi
 
@@ -49,10 +74,10 @@ if [ ! -z "${PRIVACYPOLICY}" ]; then
 fi
 
 # set donation url
-if [ ! -z "${DONATION_URL}" ]; then
-    sed -i -e "s+donation_url: false+donation_url: ${DONATION_URL}+g" \
-    searx/settings.yml;
-fi
+# if [ ! -z "${DONATION_URL}" ]; then
+    # sed -i -e "s+donation_url: false+donation_url: ${DONATION_URL}+g" \
+    # searx/settings.yml;
+# fi
 
 # set contact url
 if [ ! -z "${CONTACT}" ]; then
