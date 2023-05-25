@@ -1,29 +1,8 @@
 version: '3.7'
 
-#services:
-  #xng:
-    #image: yeavv/xng:production
-    #restart: always
-    #ports:
-      #- 8080:8080
 services:
-  redis:
-    image: redis:alpine
-    restart: always
-    command: redis-server --save "" --appendonly "no"
-    cap_drop:
-      - ALL
-
   xng:
     image: yeavv/xng:production
     restart: always
-    cap_drop:
-      - ALL
-    environment:
-      - LIMITER=true
-      - REDIS_URL=redis://redis:6379/0
-      - IMAGE_PROXY=true
-      #- PROXY={URL1}
-      - UWSGI_WORKERS=8
-      - UWSGI_THREADS=4
-      #- BASE_URL=https://{DOMAIN}/
+    #ports:
+      #- 8080:8080
