@@ -20,7 +20,7 @@ services:
       - SETUID
       - DAC_OVERRIDE
 
-  searxng:
+  xng:
     #image: paulgoio/searxng:{ENV}
     image: yeavv/xng:production
     restart: always
