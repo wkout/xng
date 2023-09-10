@@ -1,0 +1,31 @@
+name: config
+
+on:
+  push:
+    paths:
+      - '**.txt'
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+    - name: build and settings
+      run: |
+        git clone https://github.com/paulgoio/searxng.git
+        docker build --tag searxng-dev:latest ./searxng
+        docker run --rm -p 8080:8080 --detach --name searxng searxng-dev:latest
+        docker cp searxng:/usr/local/searxng/searx/settings.yml .
+        sed -i -e "/safe_search:/s/1/2/g" ./settings.yml
+        sed -i "s/# results_on_new_tab: false/results_on_new_tab: true/" ./settings.yml
+        sed -i -e "/autocomplete:/s/\"google\"/\"\"/g" ./settings.yml
+        rm -rf ./searxng
+    - name: commit
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git add .
+        git commit --allow-empty -m "$(git log -1 --pretty=%s)"
+        git push

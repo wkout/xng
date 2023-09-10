@@ -1,0 +1,32 @@
+name: create
+
+on:
+  workflow_run:
+    workflows: [config]
+    branches: [master]
+    types:
+      - completed
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for config to succeed
+        if: ${{ github.event.workflow_run.conclusion != 'success' }}
+        run: exit 1
+        
+      - name: Prepare
+        uses: actions/checkout@v4
+      - uses: okteto/login@latest
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
+
+      - uses: okteto/namespace@latest
+        with:
+          namespace: ${{ secrets.OKTETO_NAME }}
+
+      - name: Destroy stack
+        uses: okteto/destroy-stack@main
+
+      - name: Create stack
+        uses:  okteto/deploy-stack@latest
