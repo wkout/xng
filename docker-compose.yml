@@ -1,8 +1,12 @@
 version: '3.7'
 
 services:
-  xng:
-    image: yeavv/xng:production
+  to:
+    image: paulgoio/searxng:production
     restart: always
     ports:
       - 8080:8080
+    volumes:
+      - ./settings.yml:/usr/local/searxng/searx/settings.yml
+    cap_drop:
+      - ALL
