@@ -1,6 +1,11 @@
 name: config
 
 on:
+  workflow_run:
+    workflows: ["check"]
+    branches: [master]
+    types:
+      - completed
   push:
     paths:
       - '**.txt'

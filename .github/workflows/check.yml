@@ -1,9 +1,6 @@
 name: check
 
 on:
-  push:
-    branches:
-      - master
   schedule:
     - cron: '05 20 * * *'
   workflow_dispatch:
