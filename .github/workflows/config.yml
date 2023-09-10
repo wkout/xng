@@ -9,6 +9,9 @@ jobs:
   config:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for config to succeed
+        if: ${{ github.event.workflow_run.conclusion != 'success' }}
+        run: exit 1
       - name: checkout code
         uses: actions/checkout@v4
       - name: build and settings
