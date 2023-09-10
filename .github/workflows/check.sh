@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 UPSTREAM=$(git ls-remote https://github.com/paulgoio/searxng |  head -1 | cut -f 1 )
-#UPSTREAM=v${TAG#v}
 cat .github/version.txt | while read line      
 do
    CURRENT=$line          
@@ -13,6 +12,7 @@ else
     git config user.name GitHub
     git config user.email noreply@github.com
     echo "${UPSTREAM}" > .github/version.txt
+    rm -rf tmp
     git add .
     git commit --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" --allow-empty -m "$(git log -1 --pretty=%s)"
     git push 
