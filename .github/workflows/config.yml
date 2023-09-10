@@ -21,8 +21,8 @@ jobs:
           sed -i "s/# results_on_new_tab: false/results_on_new_tab: true/" ./settings.yml
           sed -i -e "/autocomplete:/s/\"google\"/\"\"/g" ./settings.yml
           rm -rf ./searxng
-       - name: commit
-         run: |
+      - name: commit
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
