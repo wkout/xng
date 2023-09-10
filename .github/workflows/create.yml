@@ -1,11 +1,11 @@
 name: create
 
 on:
-  workflow_run:
-    workflows: [config]
-    branches: [master]
-    types:
-      - completed
+  #workflow_run:
+    #workflows: [config]
+    #branches: [master]
+    #types:
+      #- completed
 
 jobs:
   on-success:

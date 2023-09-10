@@ -1,9 +1,9 @@
 name: config
 
 on:
-  push:
-    paths:
-      - '**.txt'
+  #push:
+    #paths:
+      #- '**.txt'
 
 jobs:
   config:
