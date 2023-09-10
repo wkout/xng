@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 UPSTREAM=$(git ls-remote https://github.com/paulgoio/searxng |  head -1 | cut -f 1 )
+#UPSTREAM=v${TAG#v}
 cat .github/version.txt | while read line      
 do
    CURRENT=$line          
