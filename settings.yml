@@ -823,10 +823,11 @@ engines:
   - name: habrahabr
     engine: xpath
     paging: true
-    search_url: https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath: //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
-    title_xpath: //article[contains(@class, "post")]//a[@class="post__title_link"]
-    content_xpath: //article[contains(@class, "post")]//div[contains(@class, "post__text")]
+    search_url: https://habr.com/en/search/page{pageno}/?q={query}
+    results_xpath: //article[contains(@class, "tm-articles-list__item")]
+    url_xpath: .//a[@class="tm-title__link"]/@href
+    title_xpath: .//a[@class="tm-title__link"]
+    content_xpath: .//div[contains(@class, "article-formatted-body")]
     categories: it
     timeout: 4.0
     disabled: true
@@ -875,11 +876,14 @@ engines:
     # Instanes will be selected randomly, see https://api.invidious.io/ for
     # instances that are stable (good uptime) and close to you.
     base_url:
-      - https://invidious.snopyta.org
+      - https://invidious.io.lol
+      - https://invidious.fdn.fr
+      - https://yt.artemislena.eu
+      - https://invidious.tiekoetter.com
+      - https://invidious.flokinet.to
       - https://vid.puffyan.us
-      # - https://invidious.kavin.rocks  # Error 1020 // Access denied by Cloudflare
-      - https://invidio.xamh.de
-      - https://inv.riverside.rocks
+      - https://invidious.privacydev.net
+      - https://inv.tux.pizza
     shortcut: iv
     timeout: 3.0
     disabled: true
@@ -1224,10 +1228,10 @@ engines:
     shortcut: pd
     search_url: https://pub.dev/packages?q={query}&page={pageno}
     paging: true
-    results_xpath: /html/body/main/div/div[@class="search-results"]/div[@class="packages"]/div
+    results_xpath: //div[contains(@class,"packages-item")]
     url_xpath: ./div/h3/a/@href
     title_xpath: ./div/h3/a
-    content_xpath: ./p[@class="packages-description"]
+    content_xpath: ./div/div/div[contains(@class,"packages-description")]/span
     categories: [packages, it]
     timeout: 3.0
     disabled: true
@@ -1248,7 +1252,7 @@ engines:
     shortcut: pypi
     engine: xpath
     paging: true
-    search_url: https://pypi.org/search?q={query}&page={pageno}
+    search_url: https://pypi.org/search/?q={query}&page={pageno}
     results_xpath: /html/body/main/div/div/div/form/div/ul/li/a[@class="package-snippet"]
     url_xpath: ./@href
     title_xpath: ./h3/span[@class="package-snippet__name"]
@@ -1435,8 +1439,6 @@ engines:
     shortcut: solid
     timeout: 4.0
     base_url:
-      - https://solidtorrents.net
-      - https://solidtorrents.eu
       - https://solidtorrents.to
       - https://bitsearch.to
 
@@ -1462,6 +1464,18 @@ engines:
   - name: tagesschau
     engine: tagesschau
     shortcut: ts
+    disabled: true
+
+  - name: tmdb
+    engine: xpath
+    paging: true
+    search_url: https://www.themoviedb.org/search?page={pageno}&query={query}
+    results_xpath: //div[contains(@class,"movie") or contains(@class,"tv")]//div[contains(@class,"card")]
+    url_xpath: .//div[contains(@class,"poster")]/a/@href
+    thumbnail_xpath: .//img/@src
+    title_xpath: .//div[contains(@class,"title")]//h2
+    content_xpath: .//div[contains(@class,"overview")]
+    shortcut: tm
     disabled: true
 
   # Requires Tor
@@ -1888,6 +1902,12 @@ engines:
     shortcut: sjp
     base_url: https://sjp.pwn.pl/
     timeout: 5.0
+    disabled: true
+
+  - name: svgrepo
+    engine: svgrepo
+    shortcut: svg
+    timeout: 10.0
     disabled: true
 
     # wikimini: online encyclopedia for children
