@@ -658,12 +658,10 @@ engines:
     categories: [general]
 
   - name: duckduckgo
-    disabled: true
     engine: duckduckgo
     shortcut: ddg
 
   - name: duckduckgo images
-    disabled: true
     engine: duckduckgo_extra
     categories: [images, web]
     ddg_category: images
@@ -671,7 +669,6 @@ engines:
     disabled: true
 
   - name: duckduckgo videos
-    disabled: true
     engine: duckduckgo_extra
     categories: [videos, web]
     ddg_category: videos
@@ -679,7 +676,6 @@ engines:
     disabled: true
 
   - name: duckduckgo news
-    disabled: true
     engine: duckduckgo_extra
     categories: [news, web]
     ddg_category: news
@@ -687,7 +683,6 @@ engines:
     disabled: true
 
   - name: duckduckgo weather
-    disabled: true
     engine: duckduckgo_weather
     shortcut: ddw
     disabled: true
