@@ -438,32 +438,19 @@ engines:
     shortcut: bt
     disabled: true
 
-  - name: ccc-tv
-    engine: xpath
-    paging: false
-    search_url: https://media.ccc.de/search/?q={query}
-    url_xpath: //div[@class="caption"]/h3/a/@href
-    title_xpath: //div[@class="caption"]/h3/a/text()
-    content_xpath: //div[@class="caption"]/h4/@title
-    categories: videos
-    disabled: true
-    shortcut: c3tv
-    about:
-      website: https://media.ccc.de/
-      wikidata_id: Q80729951
-      official_api_documentation: https://github.com/voc/voctoweb
-      use_official_api: false
-      require_api_key: false
-      results: HTML
-      # We don't set language: de here because media.ccc.de is not just
-      # for a German audience. It contains many English videos and many
-      # German videos have English subtitles.
-
   - name: openverse
     disabled: true
     engine: openverse
     categories: images
     shortcut: opv
+
+  - name: media.ccc.de
+    engine: ccc_media
+    shortcut: c3tv
+    # We don't set language: de here because media.ccc.de is not just
+    # for a German audience. It contains many English videos and many
+    # German videos have English subtitles.
+    disabled: true
 
   - name: chefkoch
     engine: chefkoch
@@ -658,10 +645,12 @@ engines:
     categories: [general]
 
   - name: duckduckgo
+    disabled: true
     engine: duckduckgo
     shortcut: ddg
 
   - name: duckduckgo images
+    disabled: true
     engine: duckduckgo_extra
     categories: [images, web]
     ddg_category: images
@@ -669,6 +658,7 @@ engines:
     disabled: true
 
   - name: duckduckgo videos
+    disabled: true
     engine: duckduckgo_extra
     categories: [videos, web]
     ddg_category: videos
@@ -676,6 +666,7 @@ engines:
     disabled: true
 
   - name: duckduckgo news
+    disabled: true
     engine: duckduckgo_extra
     categories: [news, web]
     ddg_category: news
@@ -683,6 +674,7 @@ engines:
     disabled: true
 
   - name: duckduckgo weather
+    disabled: true
     engine: duckduckgo_weather
     shortcut: ddw
     disabled: true
@@ -1069,6 +1061,16 @@ engines:
     shortcut: loc
     categories: images
 
+  - name: libretranslate
+    engine: libretranslate
+    # https://github.com/LibreTranslate/LibreTranslate?tab=readme-ov-file#mirrors
+    base_url:
+      - https://translate.terraprint.co
+      - https://trans.zillyhuhn.com
+    # api_key: abc123
+    shortcut: lt
+    disabled: true
+
   - name: lingva
     disabled: true
     engine: lingva
@@ -1227,6 +1229,14 @@ engines:
       require_api_key: false
       results: JSON
 
+  # read https://docs.searxng.org/dev/engines/online/mullvad_leta.html
+  # - name: mullvadleta
+  #   engine: mullvad_leta
+  #   use_cache: true  # Only 100 non-cache searches per day, suggested only for private instances
+  #   search_url: https://leta.mullvad.net
+  #   categories: [general, web]
+  #   shortcut: ml
+
   - name: odysee
     engine: odysee
     shortcut: od
@@ -1272,6 +1282,11 @@ engines:
       use_official_api: false
       require_api_key: false
       results: JSON
+
+  - name: openmeteo
+    engine: open_meteo
+    shortcut: om
+    disabled: true
 
   # - name: opensemanticsearch
   #   engine: opensemantic
@@ -1372,10 +1387,10 @@ engines:
     disabled: true
     inactive: true
     pixiv_image_proxies:
-      - pximg.example.org
+      - https://pximg.example.org
       # A proxy is required to load the images. Hosting an image proxy server
       # for Pixiv:
-      #    --> https://codeberg.org/VnPower/PixivFE/wiki/Hosting-an-image-proxy-server-for-Pixiv
+      #    --> https://pixivfe.pages.dev/hosting-image-proxy-server/
       # Proxies from public instances.  Ask the public instances owners if they
       # agree to receive traffic from SearXNG!
       #    --> https://codeberg.org/VnPower/PixivFE#instances
